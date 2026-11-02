@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マァスゥ — 紹介された人だけが入れる、消える繋がりの場所</title>
+<meta name="description" content="マァスゥは紹介制の小さなSNS。検索はなく、メッセージは24時間で消え、繋がりは3日ごとのやりとりで続いていきます。">
+<link rel="icon" href="assets/maasuu-logo-512.png">
+<meta property="og:title" content="マァスゥ">
+<meta property="og:description" content="紹介された人だけが入れる、消える繋がりの場所。">
+<meta property="og:image" content="assets/maasuu-logo-512.png">
+<style>
+  :root{
+    --cream:#fdf7f4;
+    --ink:#43302a;
+    --ink-soft:rgba(67,48,42,.72);
+    --ink-faint:rgba(67,48,42,.45);
+    --line:rgba(67,48,42,.14);
+    --accent:#cf6242;
+    --card:rgba(67,48,42,.035);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:480px;margin:0 auto;padding:0 24px 64px;}
+
+  /* マストヘッド */
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:22px 0 6px;
+  }
+  .brand{font-weight:800;letter-spacing:.14em;font-size:15px;}
+  .brand small{display:block;font-size:9px;letter-spacing:.42em;color:var(--ink-faint);font-weight:700;}
+  .tag{
+    font-size:11px;font-weight:700;letter-spacing:.18em;
+    border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--ink-soft);
+  }
+
+  /* FV */
+  .fv{text-align:center;padding-top:26px;}
+  .fv img.keyvisual{width:min(240px,62vw);height:auto;}
+  .fv h1{
+    margin-top:22px;font-size:27px;line-height:1.55;font-weight:800;letter-spacing:.04em;
+  }
+  .chips{
+    margin-top:22px;display:flex;flex-direction:column;gap:8px;align-items:center;
+  }
+  .chip{
+    font-size:12.5px;font-weight:700;letter-spacing:.05em;color:var(--ink-soft);
+    border:1px solid var(--line);border-radius:999px;padding:6px 16px;background:var(--card);
+  }
+  .cta{
+    display:block;margin-top:30px;background:var(--accent);color:#fff;
+    text-decoration:none;font-weight:800;font-size:16px;letter-spacing:.06em;
+    border-radius:999px;padding:17px 20px;
+  }
+  .cta-note{margin-top:14px;font-size:12px;color:var(--ink-faint);line-height:1.7;}
+
+  /* セクション共通 */
+  section{margin-top:64px;}
+  .sec-label{
+    font-size:10px;font-weight:800;letter-spacing:.42em;color:var(--ink-faint);text-align:center;
+  }
+  .sec-title{
+    margin-top:10px;text-align:center;font-size:19px;font-weight:800;letter-spacing:.05em;line-height:1.6;
+  }
+
+  /* 見せない理由 */
+  .reasons{margin-top:26px;display:flex;flex-direction:column;gap:12px;}
+  .reason{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;
+  }
+  .reason h3{font-size:15px;font-weight:800;letter-spacing:.03em;}
+  .reason p{margin-top:4px;font-size:13.5px;color:var(--ink-soft);line-height:1.75;}
+
+  /* ルール */
+  .steps{margin-top:26px;display:flex;flex-direction:column;}
+  .step{display:flex;gap:16px;padding:16px 2px;border-bottom:1px solid var(--line);}
+  .step:last-child{border-bottom:none;}
+  .step-num{
+    flex:0 0 auto;width:28px;height:28px;border-radius:50%;
+    border:1.5px solid var(--ink);font-size:13px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;margin-top:3px;
+  }
+  .step h3{font-size:15px;font-weight:800;letter-spacing:.03em;}
+  .step p{margin-top:2px;font-size:13.5px;color:var(--ink-soft);line-height:1.75;}
+  .rule-note{margin-top:14px;font-size:12px;color:var(--ink-faint);text-align:center;line-height:1.8;}
+
+  /* 広場 */
+  .genres{margin-top:24px;display:flex;flex-wrap:wrap;gap:9px;justify-content:center;}
+  .genre{
+    font-size:13px;font-weight:700;border:1px solid var(--line);border-radius:999px;
+    padding:7px 15px;background:var(--card);color:var(--ink-soft);
+  }
+  .plaza-note{margin-top:16px;text-align:center;font-size:12.5px;color:var(--ink-faint);line-height:1.8;}
+
+  /* 自分のページ モック */
+  .mock{
+    margin:26px auto 0;max-width:300px;background:var(--card);
+    border:1px solid var(--line);border-radius:26px;padding:26px 20px 22px;text-align:center;
+  }
+  .mock .avatar{
+    width:64px;height:64px;border-radius:50%;background:var(--cream);
+    border:1px solid var(--line);margin:0 auto;display:flex;align-items:center;justify-content:center;overflow:hidden;
+  }
+  .mock .avatar img{width:52px;height:auto;}
+  .mock .mock-name{margin-top:12px;font-weight:800;font-size:15px;letter-spacing:.06em;}
+  .mock .mock-status{margin-top:2px;font-size:12px;color:var(--ink-faint);}
+  .mock .stamps{margin-top:16px;display:flex;justify-content:center;gap:10px;}
+  .mock .stamps img{width:52px;height:52px;object-fit:contain;border:1px solid var(--line);border-radius:14px;padding:4px;}
+  .mock .mock-cards{margin-top:16px;display:flex;flex-direction:column;gap:8px;}
+  .mock .mock-card{
+    border:1px solid var(--line);border-radius:12px;padding:9px;font-size:12px;font-weight:700;color:var(--ink-soft);
+  }
+  .home-note{margin-top:16px;text-align:center;font-size:12.5px;color:var(--ink-faint);line-height:1.8;}
+
+  /* FAQ */
+  .faq{margin-top:24px;display:flex;flex-direction:column;gap:10px;}
+  details{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 18px;
+  }
+  summary{font-size:14px;font-weight:800;cursor:pointer;letter-spacing:.02em;list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  details p{margin-top:8px;font-size:13.5px;color:var(--ink-soft);line-height:1.8;}
+
+  /* 着地 */
+  .closing{margin-top:72px;text-align:center;}
+  .closing img{width:104px;height:auto;}
+  .closing p{margin-top:14px;font-size:15px;font-weight:800;letter-spacing:.04em;line-height:1.7;}
+
+  footer{
+    margin-top:56px;padding-top:22px;border-top:1px solid var(--line);
+    text-align:center;font-size:11.5px;color:var(--ink-faint);line-height:1.9;
+  }
+  footer a{color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">マァスゥ<small>MAASUU</small></div>
+    <div class="tag">紹介制</div>
+  </header>
+
+  <!-- FV -->
+  <div class="fv">
+    <img class="keyvisual" src="assets/mascot-keyvisual.png" alt="積み重なったマーモットのまぁ＆すぅ">
+    <h1>紹介された人だけが入れる、<br>消える繋がりの場所。</h1>
+    <div class="chips">
+      <span class="chip">3日で往復3ターン、続ければ +3日</span>
+      <span class="chip">メッセージは24時間で消える</span>
+      <span class="chip">検索はありません</span>
+    </div>
+    <a class="cta" href="https://maasuu.vercel.app">紹介リンクをお持ちの方はこちら</a>
+    <p class="cta-note">紹介がない方は入ることができません。<br>それが、この場所の静けさです。</p>
+  </div>
+
+  <!-- 見せない理由 -->
+  <section>
+    <p class="sec-label">ABOUT</p>
+    <h2 class="sec-title">中身は、入った人にだけ。</h2>
+    <div class="reasons">
+      <div class="reason">
+        <h3>検索はありません</h3>
+        <p>誰かを探す場所ではありません。出会いは、知り合いからの紹介だけです。</p>
+      </div>
+      <div class="reason">
+        <h3>メンバーは公開されません</h3>
+        <p>誰がいるかは、外からは分かりません。一覧もランキングもありません。</p>
+      </div>
+      <div class="reason">
+        <h3>繋がりは当事者だけのもの</h3>
+        <p>やりとりは2人だけのあいだで起きて、24時間で消えていきます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 繋がりのルール -->
+  <section>
+    <p class="sec-label">RULES</p>
+    <h2 class="sec-title">繋がりには、期限があります。</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>初日はスタンプだけ</h3>
+          <p>繋がった初日は、まぁ＆すぅのスタンプだけで話します。言葉より先に、空気で挨拶を。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>お互いの許可で、文字が開く</h3>
+          <p>双方の許可が出ると、140文字までのテキストで話せるようになります。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>3日で往復3ターン</h3>
+          <p>最初のやりとりから3日以内に往復3ターンを交わせば、繋がりは +3日 延びます。交わせなければ、繋がりは消えます。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <h3>メッセージは24時間で消える</h3>
+          <p>送った言葉は1日で消えます。残らないから、軽く、本音で話せます。</p>
+        </div>
+      </div>
+    </div>
+    <p class="rule-note">1日のやりとりは8ターンまで。同性同士の繋がりは、ルールがゆるやかです。</p>
+  </section>
+
+  <!-- 広場 -->
+  <section>
+    <p class="sec-label">PLAZA</p>
+    <h2 class="sec-title">広場は、ジャンルだけ見えます。</h2>
+    <div class="genres">
+      <span class="genre">美容・コーデ</span>
+      <span class="genre">ゲーム</span>
+      <span class="genre">推し活</span>
+      <span class="genre">仕事・副業</span>
+      <span class="genre">恋愛相談</span>
+      <span class="genre">雑談</span>
+    </div>
+    <p class="plaza-note">メンバー同士の情報カードが流れる掲示板です。<br>投稿そのものは、入った人にだけ見えます。</p>
+  </section>
+
+  <!-- 自分のページ -->
+  <section>
+    <p class="sec-label">MY PAGE</p>
+    <h2 class="sec-title">ホームは、自分のページ。</h2>
+    <div class="mock" aria-label="自分のページのイメージ">
+      <div class="avatar"><img src="assets/stamp-07.png" alt=""></div>
+      <p class="mock-name">あなたのページ</p>
+      <p class="mock-status">ステータスを一行で</p>
+      <div class="stamps">
+        <img src="assets/stamp-01.png" alt="まぁ＆すぅのスタンプ">
+        <img src="assets/stamp-02.png" alt="まぁ＆すぅのスタンプ">
+        <img src="assets/stamp-07.png" alt="まぁ＆すぅのスタンプ">
+      </div>
+      <div class="mock-cards">
+        <div class="mock-card">自己紹介のカード</div>
+        <div class="mock-card">リンクのカード</div>
+      </div>
+    </div>
+    <p class="home-note">名前・ステータス・リンクカードを並べた、<br>自分だけのページがホームになります。</p>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <p class="sec-label">FAQ</p>
+    <h2 class="sec-title">よくある質問</h2>
+    <div class="faq">
+      <details>
+        <summary>紹介がないと入れませんか？</summary>
+        <p>はい。マァスゥは紹介制で、参加している知人からの紹介リンクが入口です。検索や自由登録はありません。</p>
+      </details>
+      <details>
+        <summary>メッセージは本当に消えますか？</summary>
+        <p>はい。送ったメッセージは24時間で消えます。繋がり自体も、3日ごとのやりとりが続かなければ消えます。</p>
+      </details>
+      <details>
+        <summary>誰かを探すことはできますか？</summary>
+        <p>できません。検索機能はなく、出会いは紹介と広場からのエンカ申請だけです。</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 着地 -->
+  <div class="closing">
+    <img src="assets/mascot-keyvisual.png" alt="まぁ＆すぅ">
+    <p>入口は、紹介だけ。<br>続きは、中で。</p>
+    <a class="cta" href="https://maasuu.vercel.app">紹介リンクをお持ちの方はこちら</a>
+  </div>
+
+  <footer>
+    <p>これはマァスゥの別デザイン雛形（パターンD：会員制・秘匿型）です。<br>
+    本番サービスは <a href="https://maasuu.vercel.app">maasuu.vercel.app</a> です。</p>
+  </footer>
+
+</div>
+</body>
+</html>
